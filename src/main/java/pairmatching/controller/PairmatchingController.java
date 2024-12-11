@@ -1,5 +1,6 @@
 package pairmatching.controller;
 
+import pairmatching.domain.dto.CurriculumResponse;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -16,18 +17,16 @@ public class PairmatchingController {
         outputView.printSelectFunction();
         String function = inputView.readSelectFunction();
         processSelectFunction(function);
-
-
     }
 
     private void processSelectFunction(String function) {
         if (function.equals("1")) {
-            // 페어 매칭
+            displayCurriculum();
             return;
         }
 
         if (function.equals("2")) {
-            // 페어 조회
+            displayCurriculum();
             return;
         }
 
@@ -42,5 +41,10 @@ public class PairmatchingController {
         }
 
         throw new IllegalArgumentException();
+    }
+
+    private void displayCurriculum() {
+        CurriculumResponse response = CurriculumResponse.createResponse();
+        outputView.printCurriculum(response);
     }
 }

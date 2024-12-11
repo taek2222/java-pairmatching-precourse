@@ -1,6 +1,12 @@
 package pairmatching.domain;
 
-import static pairmatching.domain.Level.*;
+import static pairmatching.domain.Level.LEVEL1;
+import static pairmatching.domain.Level.LEVEL2;
+import static pairmatching.domain.Level.LEVEL4;
+
+import java.util.Arrays;
+import java.util.List;
+import pairmatching.domain.dto.curriculum.MissionResponse;
 
 public enum Mission {
     CAR_RACING(LEVEL1, "자동차경주"),
@@ -21,5 +27,14 @@ public enum Mission {
     Mission(Level level, String name) {
         this.level = level;
         this.name = name;
+    }
+
+    public static MissionResponse createResponse(Level level) {
+        List<String> names = Arrays.stream(values())
+                .filter(mission -> mission.level == level)
+                .map(mission -> mission.name)
+                .toList();
+
+        return new MissionResponse(names);
     }
 }

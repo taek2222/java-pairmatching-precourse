@@ -1,5 +1,10 @@
 package pairmatching.domain;
 
+import java.util.Arrays;
+import java.util.List;
+import pairmatching.domain.dto.curriculum.LevelResponse;
+import pairmatching.domain.dto.curriculum.MissionResponse;
+
 public enum Level {
     LEVEL1("레벨1"),
     LEVEL2("레벨2"),
@@ -13,5 +18,12 @@ public enum Level {
         this.name = name;
     }
 
-    // 추가 기능 구현
+    public static List<LevelResponse> createResponse() {
+        return Arrays.stream(values())
+                .map(level -> {
+                    MissionResponse response = Mission.createResponse(level);
+                    return new LevelResponse(level.name, response);
+                })
+                .toList();
+    }
 }
