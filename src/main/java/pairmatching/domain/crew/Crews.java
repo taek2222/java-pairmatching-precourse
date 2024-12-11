@@ -1,20 +1,18 @@
-package pairmatching.domain;
+package pairmatching.domain.crew;
 
 import java.util.List;
 import pairmatching.domain.curriculum.Course;
 
 public class Crews {
 
-    private final List<Crew> frontend;
-    private final List<Crew> backend;
+    private final List<Crew> crews;
 
-    public Crews(List<Crew> frontend, List<Crew> backend) {
-        this.frontend = frontend;
-        this.backend = backend;
+    public Crews(List<Crew> crews) {
+        this.crews = crews;
     }
 
     public List<String> findCrewNamesByCourse(Course course) {
-        return backend.stream()
+        return crews.stream()
                 .filter(crew -> crew.isSameCourse(course))
                 .map(Crew::getName)
                 .toList();

@@ -4,9 +4,10 @@ import static pairmatching.domain.curriculum.Course.BACKEND;
 import static pairmatching.domain.curriculum.Course.FRONTEND;
 import static pairmatching.global.util.CurriculumParser.parseCurriculum;
 
+import java.util.ArrayList;
 import java.util.List;
-import pairmatching.domain.Crew;
-import pairmatching.domain.Crews;
+import pairmatching.domain.crew.Crew;
+import pairmatching.domain.crew.Crews;
 import pairmatching.domain.Curriculum;
 import pairmatching.domain.curriculum.Course;
 import pairmatching.domain.dto.CurriculumResponse;
@@ -33,9 +34,12 @@ public class PairmatchingController {
     }
 
     private Crews initializeCrews() {
-        List<Crew> frontCrew = initializeCrew("frontend-crew", FRONTEND);
-        List<Crew> backendCrew = initializeCrew("backend-crew", BACKEND);
-        return new Crews(frontCrew, backendCrew);
+        List<Crew> mergeCrews = new ArrayList<>();
+
+        mergeCrews.addAll(initializeCrew("frontend-crew", FRONTEND));
+        mergeCrews.addAll(initializeCrew("backend-crew", BACKEND));
+
+        return new Crews(mergeCrews);
     }
 
     private List<Crew> initializeCrew(String fileName, Course course) {

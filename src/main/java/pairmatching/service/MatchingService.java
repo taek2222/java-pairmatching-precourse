@@ -3,15 +3,15 @@ package pairmatching.service;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
-import pairmatching.domain.Crews;
+import pairmatching.domain.crew.Crews;
 import pairmatching.domain.Curriculum;
 import pairmatching.domain.Pair;
-import pairmatching.domain.Pairs;
+import pairmatching.domain.PairMatching;
 import pairmatching.domain.curriculum.Course;
 
 public class MatchingService {
 
-    public Pairs processMatching(Crews crews, Curriculum curriculum) {
+    public PairMatching processMatching(Crews crews, Curriculum curriculum) {
         Course course = curriculum.getCourse();
         List<String> names = crews.findCrewNamesByCourse(course);
 
@@ -21,7 +21,7 @@ public class MatchingService {
         // 매칭 정보 이미 존재시 로직 추가해아함
 
         List<Pair> pairs = matchingPars(mixNames);
-        return new Pairs(pairs);
+        return new PairMatching(curriculum, pairs);
     }
 
     private List<Pair> matchingPars(List<String> mixNames) {
