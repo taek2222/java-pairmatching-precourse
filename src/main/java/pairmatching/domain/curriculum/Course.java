@@ -14,6 +14,13 @@ public enum Course {
         this.name = name;
     }
 
+    public static Course findCourseByName(String name) {
+        return Arrays.stream(values())
+                .filter(course -> course.name.equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
+
     public static CourseResponse createResponse() {
         List<String> names = Arrays.stream(values())
                 .map(course -> course.name)

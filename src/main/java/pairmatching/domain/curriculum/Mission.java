@@ -29,6 +29,13 @@ public enum Mission {
         this.name = name;
     }
 
+    public static Mission findMissionByName(String name) {
+        return Arrays.stream(values())
+                .filter(mission -> mission.name.equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
+
     public static MissionResponse createResponse(Level level) {
         List<String> names = Arrays.stream(values())
                 .filter(mission -> mission.level == level)

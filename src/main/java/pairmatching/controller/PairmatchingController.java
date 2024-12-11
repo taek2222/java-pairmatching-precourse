@@ -1,5 +1,8 @@
 package pairmatching.controller;
 
+import static pairmatching.global.util.CurriculumParser.parseCurriculum;
+
+import pairmatching.domain.Curriculum;
 import pairmatching.domain.dto.CurriculumResponse;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
@@ -17,6 +20,9 @@ public class PairmatchingController {
         outputView.printSelectFunction();
         String function = inputView.readSelectFunction();
         processSelectFunction(function);
+
+        String input = inputView.readCurriculum();
+        Curriculum curriculum = parseCurriculum(input);
     }
 
     private void processSelectFunction(String function) {

@@ -18,6 +18,13 @@ public enum Level {
         this.name = name;
     }
 
+    public static Level findLevelByName(String name) {
+        return Arrays.stream(values())
+                .filter(level -> level.name.equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
+
     public static List<LevelResponse> createResponse() {
         return Arrays.stream(values())
                 .map(level -> {
