@@ -21,4 +21,8 @@ public class PairMatching {
 
         return new PairsResponse(responses);
     }
+
+    public boolean isSameCurriculum(Curriculum curriculum) {
+        return this.curriculum.equals(curriculum);
+    }
 }

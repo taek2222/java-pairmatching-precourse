@@ -17,6 +17,7 @@ public class OutputView {
 
         List<PairResponse> responses = pairsResponse.pairResponses();
         responses.forEach(this::printPairMatchingResult);
+        System.out.printf(NEW_LINE.get());
     }
 
     private void printPairMatchingResult(PairResponse pairResponse) {

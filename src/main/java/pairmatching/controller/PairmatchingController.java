@@ -7,6 +7,7 @@ import static pairmatching.global.util.CurriculumParser.parseCurriculum;
 import java.util.ArrayList;
 import java.util.List;
 import pairmatching.domain.PairMatching;
+import pairmatching.domain.PairMatchings;
 import pairmatching.domain.crew.Crew;
 import pairmatching.domain.crew.Crews;
 import pairmatching.domain.Curriculum;
@@ -33,15 +34,25 @@ public class PairmatchingController {
     public void run() {
         Crews crews = initializeCrews();
 
-        processSelectFunction();
+        PairMatchings pairMatchings = new PairMatchings();
+        while (true) {
+            String function = readSelectFunction();
 
+            if (function.equals("Q")) {
+                return;
+            }
+            processSelectFunction(function, crews, pairMatchings);
+        }
+    }
+
+    private String readSelectFunction() {
+        outputView.printSelectFunction();
+        return inputView.readSelectFunction();
+    }
+
+    private Curriculum readAndParseCurriculum() {
         String input = inputView.readCurriculum();
-
-        Curriculum curriculum = parseCurriculum(input);
-        PairMatching matching = matchingService.processMatching(crews, curriculum);
-
-        PairsResponse response = matching.createResponse();
-        outputView.printPairsMatchingResult(response);
+        return parseCurriculum(input);
     }
 
     private Crews initializeCrews() {
@@ -60,31 +71,35 @@ public class PairmatchingController {
                 .toList();
     }
 
-    private void processSelectFunction() {
-        outputView.printSelectFunction();
-        String function = inputView.readSelectFunction();
-
+    private void processSelectFunction(String function, Crews crews, PairMatchings pairMatchings) {
         if (function.equals("1")) {
             displayCurriculum();
+            Curriculum curriculum = readAndParseCurriculum();
+            PairMatching matching = matchingService.processMatching(crews, curriculum);
+            pairMatchings.addPairMatching(matching);
+            displayPairMatchingResult(matching);
+
             return;
         }
 
         if (function.equals("2")) {
             displayCurriculum();
+            Curriculum curriculum = readAndParseCurriculum();
+            PairMatching matching = pairMatchings.findPairMatchingByCurriculum(curriculum);
+            displayPairMatchingResult(matching);
             return;
         }
 
         if (function.equals("3")) {
-            // 페어 초기화
+            pairMatchings.clean();
             return;
         }
-
-        if (function.equals("Q")) {
-            // 종료
-            return;
-        }
-
         throw new IllegalArgumentException();
+    }
+
+    private void displayPairMatchingResult(PairMatching matching) {
+        PairsResponse response = matching.createResponse();
+        outputView.printPairsMatchingResult(response);
     }
 
     private void displayCurriculum() {
