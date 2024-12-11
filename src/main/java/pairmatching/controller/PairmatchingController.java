@@ -14,6 +14,33 @@ public class PairmatchingController {
 
     public void run() {
         outputView.printSelectFunction();
-        inputView.readSelectFunction();
+        String function = inputView.readSelectFunction();
+        processSelectFunction(function);
+
+
+    }
+
+    private void processSelectFunction(String function) {
+        if (function.equals("1")) {
+            // 페어 매칭
+            return;
+        }
+
+        if (function.equals("2")) {
+            // 페어 조회
+            return;
+        }
+
+        if (function.equals("3")) {
+            // 페어 초기화
+            return;
+        }
+
+        if (function.equals("Q")) {
+            // 종료
+            return;
+        }
+
+        throw new IllegalArgumentException();
     }
 }
