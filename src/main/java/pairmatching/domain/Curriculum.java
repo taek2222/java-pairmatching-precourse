@@ -17,12 +17,16 @@ public class Curriculum {
         this.mission = mission;
     }
 
-    public boolean isFrontendCourse() {
-        return this.course == Course.FRONTEND;
+    public boolean isSameLevel(Level level) {
+        return this.level == level;
     }
 
     public Course getCourse() {
         return course;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     @Override

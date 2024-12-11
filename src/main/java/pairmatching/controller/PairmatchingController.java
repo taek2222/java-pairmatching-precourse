@@ -44,6 +44,7 @@ public class PairmatchingController {
 
             if (function.equals("3")) {
                 pairMatchings.clean();
+                continue;
             }
 
             processSelectFunction(function, crews, pairMatchings);
@@ -80,13 +81,13 @@ public class PairmatchingController {
         displayCurriculum();
         if (function.equals("1")) {
             Curriculum curriculum = readAndParseCurriculum();
-            if (pairMatchings.findPairMatchingByCurriculum(curriculum) != null) {
+            if (pairMatchings.isDuplicatePairMatching(curriculum)) {
                 if (!inputView.readRetryMatching()) {
                     return;
                 }
             }
 
-            PairMatching matching = matchingService.processMatching(crews, curriculum);
+            PairMatching matching = matchingService.processMatching(crews, curriculum, pairMatchings);
             pairMatchings.addPairMatching(matching);
             displayPairMatchingResult(matching);
 

@@ -3,35 +3,45 @@ package pairmatching.service;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
+import pairmatching.domain.PairMatchings;
 import pairmatching.domain.crew.Crews;
 import pairmatching.domain.Curriculum;
 import pairmatching.domain.Pair;
 import pairmatching.domain.PairMatching;
 import pairmatching.domain.curriculum.Course;
+import pairmatching.domain.curriculum.Level;
 
 public class MatchingService {
 
-    public PairMatching processMatching(Crews crews, Curriculum curriculum) {
+    public PairMatching processMatching(Crews crews, Curriculum curriculum, PairMatchings pairMatchings) {
         Course course = curriculum.getCourse();
+        Level level = curriculum.getLevel();
+
         List<String> names = crews.findCrewNamesByCourse(course);
 
-        // 섞은 후
-        List<String> mixNames = Randoms.shuffle(names);
+        for (int loop = 0; loop < 3; loop++) {
+            List<String> mixNames = Randoms.shuffle(names);
+            List<Pair> pairs = matchingPars(mixNames, pairMatchings);
 
-        // 매칭 정보 이미 존재시 로직 추가해아함
+            if (pairMatchings.isDuplicatePairsIfLevel(pairs, level)) {
+                continue;
+            }
+            return new PairMatching(curriculum, pairs);
+        }
 
-        List<Pair> pairs = matchingPars(mixNames);
-        return new PairMatching(curriculum, pairs);
+        throw new IllegalArgumentException();
     }
 
-    private List<Pair> matchingPars(List<String> mixNames) {
+    private List<Pair> matchingPars(List<String> mixNames, PairMatchings pairMatchings) {
         List<Pair> pairs = new ArrayList<>();
         while(!mixNames.isEmpty()) {
             if (mixNames.size() == 3) {
-                pairs.add(matchingPar(mixNames, 3));
+                Pair pair = matchingPar(mixNames, 3);
+                pairs.add(pair);
                 continue;
             }
-            pairs.add(matchingPar(mixNames, 2));
+            Pair pair = matchingPar(mixNames, 2);
+            pairs.add(pair);
         }
         return pairs;
     }

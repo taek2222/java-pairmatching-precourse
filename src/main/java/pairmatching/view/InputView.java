@@ -8,6 +8,7 @@ public class InputView {
     private static final String NO = "아니오";
 
     public boolean readRetryMatching() {
+        System.out.println();
         System.out.print("""
                 매칭 정보가 있습니다. 다시 매칭하시겠습니까?
                 네 | 아니오
