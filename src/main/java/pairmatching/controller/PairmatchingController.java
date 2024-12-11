@@ -1,9 +1,16 @@
 package pairmatching.controller;
 
+import static pairmatching.domain.curriculum.Course.BACKEND;
+import static pairmatching.domain.curriculum.Course.FRONTEND;
 import static pairmatching.global.util.CurriculumParser.parseCurriculum;
 
+import java.util.List;
+import pairmatching.domain.Crew;
+import pairmatching.domain.Crews;
 import pairmatching.domain.Curriculum;
+import pairmatching.domain.curriculum.Course;
 import pairmatching.domain.dto.CurriculumResponse;
+import pairmatching.global.util.FileUtil;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -17,15 +24,31 @@ public class PairmatchingController {
     }
 
     public void run() {
-        outputView.printSelectFunction();
-        String function = inputView.readSelectFunction();
-        processSelectFunction(function);
+        Crews crews = initializeCrews();
+
+        processSelectFunction();
 
         String input = inputView.readCurriculum();
         Curriculum curriculum = parseCurriculum(input);
     }
 
-    private void processSelectFunction(String function) {
+    private Crews initializeCrews() {
+        List<Crew> frontCrew = initializeCrew("frontend-crew", FRONTEND);
+        List<Crew> backendCrew = initializeCrew("backend-crew", BACKEND);
+        return new Crews(frontCrew, backendCrew);
+    }
+
+    private List<Crew> initializeCrew(String fileName, Course course) {
+        List<String> names = FileUtil.readFile(fileName);
+        return names.stream()
+                .map(name -> new Crew(course, name))
+                .toList();
+    }
+
+    private void processSelectFunction() {
+        outputView.printSelectFunction();
+        String function = inputView.readSelectFunction();
+
         if (function.equals("1")) {
             displayCurriculum();
             return;
