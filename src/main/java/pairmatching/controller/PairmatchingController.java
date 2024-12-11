@@ -41,6 +41,11 @@ public class PairmatchingController {
             if (function.equals("Q")) {
                 return;
             }
+
+            if (function.equals("3")) {
+                pairMatchings.clean();
+            }
+
             processSelectFunction(function, crews, pairMatchings);
         }
     }
@@ -72,9 +77,15 @@ public class PairmatchingController {
     }
 
     private void processSelectFunction(String function, Crews crews, PairMatchings pairMatchings) {
+        displayCurriculum();
         if (function.equals("1")) {
-            displayCurriculum();
             Curriculum curriculum = readAndParseCurriculum();
+            if (pairMatchings.findPairMatchingByCurriculum(curriculum) != null) {
+                if (!inputView.readRetryMatching()) {
+                    return;
+                }
+            }
+
             PairMatching matching = matchingService.processMatching(crews, curriculum);
             pairMatchings.addPairMatching(matching);
             displayPairMatchingResult(matching);
@@ -83,15 +94,10 @@ public class PairmatchingController {
         }
 
         if (function.equals("2")) {
-            displayCurriculum();
             Curriculum curriculum = readAndParseCurriculum();
+
             PairMatching matching = pairMatchings.findPairMatchingByCurriculum(curriculum);
             displayPairMatchingResult(matching);
-            return;
-        }
-
-        if (function.equals("3")) {
-            pairMatchings.clean();
             return;
         }
         throw new IllegalArgumentException();
