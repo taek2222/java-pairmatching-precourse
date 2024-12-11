@@ -16,5 +16,11 @@ public class Curriculum {
         this.mission = mission;
     }
 
+    public boolean isFrontendCourse() {
+        return this.course == Course.FRONTEND;
+    }
 
+    public Course getCourse() {
+        return course;
+    }
 }

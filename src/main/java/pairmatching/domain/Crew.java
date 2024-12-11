@@ -11,4 +11,12 @@ public class Crew {
         this.course = course;
         this.name = name;
     }
+
+    public boolean isSameCourse(Course course) {
+        return this.course == course;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
