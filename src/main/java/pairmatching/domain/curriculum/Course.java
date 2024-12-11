@@ -1,4 +1,4 @@
-package pairmatching.domain;
+package pairmatching.domain.curriculum;
 
 import java.util.Arrays;
 import java.util.List;

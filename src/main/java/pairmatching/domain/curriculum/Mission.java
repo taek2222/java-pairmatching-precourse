@@ -1,8 +1,8 @@
-package pairmatching.domain;
+package pairmatching.domain.curriculum;
 
-import static pairmatching.domain.Level.LEVEL1;
-import static pairmatching.domain.Level.LEVEL2;
-import static pairmatching.domain.Level.LEVEL4;
+import static pairmatching.domain.curriculum.Level.LEVEL1;
+import static pairmatching.domain.curriculum.Level.LEVEL2;
+import static pairmatching.domain.curriculum.Level.LEVEL4;
 
 import java.util.Arrays;
 import java.util.List;

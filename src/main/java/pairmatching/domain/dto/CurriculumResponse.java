@@ -1,8 +1,8 @@
 package pairmatching.domain.dto;
 
 import java.util.List;
-import pairmatching.domain.Course;
-import pairmatching.domain.Level;
+import pairmatching.domain.curriculum.Course;
+import pairmatching.domain.curriculum.Level;
 import pairmatching.domain.dto.curriculum.CourseResponse;
 import pairmatching.domain.dto.curriculum.LevelResponse;
 
