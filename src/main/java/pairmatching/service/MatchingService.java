@@ -29,6 +29,7 @@ public class MatchingService {
         while(!mixNames.isEmpty()) {
             if (mixNames.size() == 3) {
                 pairs.add(matchingPar(mixNames, 3));
+                continue;
             }
             pairs.add(matchingPar(mixNames, 2));
         }

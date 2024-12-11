@@ -4,11 +4,25 @@ import static pairmatching.global.constant.MessageConstant.NEW_LINE;
 
 import java.util.List;
 import pairmatching.domain.dto.CurriculumResponse;
+import pairmatching.domain.dto.PairResponse;
+import pairmatching.domain.dto.PairsResponse;
 import pairmatching.domain.dto.curriculum.CourseResponse;
 import pairmatching.domain.dto.curriculum.LevelResponse;
 import pairmatching.domain.dto.curriculum.MissionResponse;
 
 public class OutputView {
+
+    public void printPairsMatchingResult(PairsResponse pairsResponse) {
+        System.out.println(NEW_LINE.get() + "페어 매칭 결과입니다.");
+
+        List<PairResponse> responses = pairsResponse.pairResponses();
+        responses.forEach(this::printPairMatchingResult);
+    }
+
+    private void printPairMatchingResult(PairResponse pairResponse) {
+        List<String> pair = pairResponse.pair();
+        System.out.println(String.join(" : ", pair));
+    }
 
     public void printCurriculum(CurriculumResponse response) {
         System.out.printf(NEW_LINE.get());

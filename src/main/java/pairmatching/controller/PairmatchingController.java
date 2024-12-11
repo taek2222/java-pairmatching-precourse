@@ -6,22 +6,28 @@ import static pairmatching.global.util.CurriculumParser.parseCurriculum;
 
 import java.util.ArrayList;
 import java.util.List;
+import pairmatching.domain.PairMatching;
 import pairmatching.domain.crew.Crew;
 import pairmatching.domain.crew.Crews;
 import pairmatching.domain.Curriculum;
 import pairmatching.domain.curriculum.Course;
 import pairmatching.domain.dto.CurriculumResponse;
+import pairmatching.domain.dto.PairsResponse;
 import pairmatching.global.util.FileUtil;
+import pairmatching.service.MatchingService;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
 public class PairmatchingController {
+
     private final InputView inputView;
     private final OutputView outputView;
+    private final MatchingService matchingService;
 
-    public PairmatchingController(InputView inputView, OutputView outputView) {
+    public PairmatchingController(InputView inputView, OutputView outputView, MatchingService matchingService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.matchingService = matchingService;
     }
 
     public void run() {
@@ -30,14 +36,19 @@ public class PairmatchingController {
         processSelectFunction();
 
         String input = inputView.readCurriculum();
+
         Curriculum curriculum = parseCurriculum(input);
+        PairMatching matching = matchingService.processMatching(crews, curriculum);
+
+        PairsResponse response = matching.createResponse();
+        outputView.printPairsMatchingResult(response);
     }
 
     private Crews initializeCrews() {
         List<Crew> mergeCrews = new ArrayList<>();
 
-        mergeCrews.addAll(initializeCrew("frontend-crew", FRONTEND));
-        mergeCrews.addAll(initializeCrew("backend-crew", BACKEND));
+        mergeCrews.addAll(initializeCrew("frontend-crew.md", FRONTEND));
+        mergeCrews.addAll(initializeCrew("backend-crew.md", BACKEND));
 
         return new Crews(mergeCrews);
     }
